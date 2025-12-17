@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Results</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .container {
+            padding-top: 60px;
+            text-align: center;
+        }
+        .card {
+            margin: auto;
+            margin-left: 150px;
+            width: 58%;
+            padding: 10px;
+            background-color: rgba(235, 237, 248, 0.3);
+        }
+        body{
+            background-image: url("https://img.freepik.com/free-photo/front-view-male-scientist-white-medical-suit-collpasing-into-floor_140725-83036.jpg?ga=GA1.1.839893145.1726393190&semt=ais_hybrid");
+            background-size: cover;
+        
+
+        }
+        p{
+            padding: 2px;
+        }
+        .results {
+            margin-top: 20px;
+            text-align: left;
+            
+            padding: 20px;
+            border-radius: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+          crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="card" style="background-color: rgba(235, 237, 248, 0.3);">
+            <h2 style="color: rgb(89, 0, 255);">Lab Test Details</h2><hr>
+            <p><strong>Registration ID:</strong> <span id="registrationId"></span></p>
+            <p><strong>Lab Assistant:</strong> <span id="labAssistant"></span></p>
+            
+            
+            <p><strong>Date of Test:</strong> <span id="date"></span></p>
+            <p><strong>Time of Test:</strong> <span id="time"></span></p>
+            <p><strong>Test Type:</strong> <span id="testType"></span></p>
+
+            <div class="results" id="testResults">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const registrationId = localStorage.getItem('registrationId');
+    const labAssistant = localStorage.getItem('labAssistant');
+    const date = localStorage.getItem('date');
+    const time = localStorage.getItem('time');
+    const testType = localStorage.getItem('testType');
+    document.getElementById('registrationId').textContent = registrationId;
+    document.getElementById('labAssistant').textContent = labAssistant;
+    document.getElementById('date').textContent = date;
+    document.getElementById('time').textContent = time;
+    document.getElementById('testType').textContent = testType
+    const testResults = {
+        "Blood Test": `
+            <h3>Blood Test Results</h3>
+            <ul>
+                <li>Hemoglobin: 13.5 g/dL</li>
+                <li>White Blood Cells: 6,000 cells/mcL</li>
+                <li>Platelets: 250,000/mcL</li>
+            </ul>
+        `,
+        "Eye Checkup": `
+            <h3>Eye Checkup Results</h3>
+            <ul>
+                <li>Vision Acuity: 20/20</li>
+                <li>Intraocular Pressure: Normal</li>
+                <li>Color Vision: Normal</li>
+                <li>Observation: No abnormalities detected</li>
+            </ul>
+        `,
+        "ECG": `
+            <h3>ECG Results</h3>
+            <ul>
+                <li>Heart Rate: 72 bpm</li>
+                <li>Rhythm: Normal Sinus Rhythm</li>
+                <li>ST Segment: No abnormalities detected</li>
+            </ul>
+        `,
+        "General Checkup": `
+            <h3>General Checkup Results</h3>
+            <p>Please consult your physician for a detailed assessment.</p>
+        `
+    };
+
+    document.getElementById('testResults').innerHTML = testResults[testType] || "<p>No results available.</p>";
+</script>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        .card {
+            margin-top :130px;
+            margin-left: 800px;
+            width: 40%;
+            color: blueviolet;
+        }
+        label {
+            padding: 10px 0;
+            font-weight: bold;
+        }
+        body {
+            background-image: url("https://img.freepik.com/free-photo/doctor-presenting-something-isolated-white-background_1368-5834.jpg?ga=GA1.1.839893145.1726393190&semt=ais_hybrid");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header text-center">
+            <h2>Book Your Appointment</h2>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label for="appointment-types">Type of Appointment</label>
+                    <select id="appointment-types" class="form-control">
+                        <option value="" disabled selected>Select an option</option>
+                        <optgroup label="Wellness (Cost: Rs 1000)">
+                            <option value="nutrition">Nutrition (Rs 1000)</option>
+                            <option value="physical-therapy">Physical Therapy (Rs 1000)</option>
+                            <option value="mental-health">Mental Health (Rs 1000)</option>
+                        </optgroup>
+                        <optgroup label="Specialty Care (Cost: Rs 2000)">
+                            <option value="cardiology">Cardiology (Rs 2000)</option>
+                            <option value="dermatology">Dermatology (Rs 2000)</option>
+                            <option value="neurology">Neurology (Rs 2000)</option>
+                        </optgroup>
+                        <optgroup label="Acute Illness (Cost: Rs 1500)">
+                            <option value="cold-flu">Cold/Flu (Rs 1500)</option>
+                            <option value="injury">Injury (Rs 1500)</option>
+                            <option value="infection">Infection (Rs 1500)</option>
+                        </optgroup>
+                        <optgroup label="Chronic Disease Management (Cost: Rs 2500)">
+                            <option value="diabetes-management">Diabetes Management (Rs 2500)</option>
+                            <option value="hypertension-monitoring">Hypertension Monitoring (Rs 2500)</option>
+                            <option value="asthma-follow-up">Asthma Follow-up (Rs 2500)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-date">Date</label>
+                    <input type="date" id="appointment-date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointment-time">Time</label>
+                    <input type="time" id="appointment-time" class="form-control" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" onclick="myfun(event)" class="btn btn-success btn-lg">Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function myfun(event) {
+            event.preventDefault();
+
+            const appointmentType = document.getElementById('appointment-types').value;
+            const appointmentDate = document.getElementById('appointment-date').value;
+            const appointmentTime = document.getElementById('appointment-time').value;
+
+            if (!appointmentType || !appointmentDate || !appointmentTime) {
+                alert("Please fill out all the fields.");
+                return;
+            }
+
+            const confirmBooking = confirm("Do you want to proceed with the appointment?");
+            if (!confirmBooking) {
+                alert("Your appointment has been cancelled.");
+                return;
+            }
+
+            const appointmentData = {
+                appointmentType,
+                appointmentDate,
+                appointmentTime,
+            };
+
+            (async () => {
+                try {
+                    const response = await fetch('http://localhost:3001/appointment/appoint', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(appointmentData),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        alert(result.message);
+                        window.location.href = "payment.html";
+                    } else {
+                        alert(`Error: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Please try again later.');
+                }
+            })();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+          crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-image: url("https://img.freepik.com/free-photo/front-view-young-female-doctor-white-medical-suit-with-stethoscope-wearing-white-protective-mask-wearing-gloves-white_140725-16599.jpg?ga=GA1.1.839893145.1726393190&semt=ais_hybrid");
+            background-size: cover;
+            background-position:320px center;
+        }
+        .card {
+            background-color: rgba(185, 181, 181, 0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            color: rgb(72, 34, 42);
+            
+        }
+        label {
+            font-weight: bold;
+            color: rgb(72, 34, 42);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 6px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 15px;
+        }
+        .radio-group label {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center" >
+        <div class="card p-4" style="width:700px; margin-top: 20px; margin-right: 500px; min-height: 750px;">
+            <div class="card-title">
+                <h1 class="text-center mt-3">Dashboard</h1>
+                <hr>
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="edit-tab" data-toggle="tab" href="#edit" role="tab">Edit Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="view-tab" data-toggle="tab" href="#view" role="tab">View Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="lab-tab" data-toggle="tab" href="#lab" role="tab">Lab Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="appointments-tab" data-toggle="tab" href="#appointments" role="tab">Appointments</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="dashboardTabContent">
+                    <!-- Edit Profile Tab -->
+                    <div class="tab-pane fade show active" id="edit" role="tabpanel">
+                        <form id="detailsForm">
+                            <div>
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Enter your name">
+                            </div>
+                            
+                            <div>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="Enter your email">
+                            </div>
+                            <div style="display: flex;">
+                                <label for="gender">Gender:</label>
+                                    <input type="radio" name="gender" id="male" value="Male">Male
+                                    <input type="radio" name="gender" id="female" value="Female">Female
+                        
+                            </div>
+                            <div>
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" placeholder="Enter your age" min="0">
+                            </div>
+                            
+                            <div>
+                                <label for="dob">Date of Birth</label>
+                                <input type="date" id="dob" name="dob">
+                            </div>
+                            
+                            <div>
+                                <label for="address">Address</label>
+                                <textarea id="address" name="address" rows="3" placeholder="Enter your address"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" onclick="saveDetails(event)" class="btn btn-success btn-lg">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- View Profile Tab -->
+                    <div class="tab-pane fade" id="view" role="tabpanel">
+                        <div id="profileDisplay">
+                            <div class="alert alert-info">No profile data found. Please fill out your profile in the Edit tab.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lab Results Tab -->
+                    <div class="tab-pane fade" id="lab" role="tabpanel">
+                        <div id="labDisplay">
+                            <div class="alert alert-info">No lab results found. Please complete a lab test first.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Appointments Tab -->
+                    <div class="tab-pane fade" id="appointments" role="tabpanel">
+                        <div id="appointmentsDisplay">
+                            <div class="alert alert-info">No appointments found. Please book an appointment first.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" 
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" 
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
+            crossorigin="anonymous"></script>
+
+    <script>
+        async function loadDetails() {
+    try {
+        const response = await fetch('http://localhost:3001/dashbo/dash');
+        if (response.ok) {
+            const data = await response.json();
+            populateForm(data);
+            displayProfile(data);
+        } else {
+            console.warn("No existing data found.");
+            displayNoProfile();
+        }
+    } catch (error) {
+        console.error("Error fetching details:", error);
+        displayNoProfile();
+    }
+}
+
+function populateForm(data) {
+    document.getElementById('name').value = data.name || "";
+    document.getElementById('email').value = data.email || "";
+    document.getElementById('age').value = data.age || "";
+    document.getElementById('dob').value = data.dob || "";
+    document.getElementById('address').value = data.address || "";
+    if (data.gender) {
+        document.getElementById(data.gender.toLowerCase()).checked = true;
+    }
+}
+
+function displayProfile(data) {
+    const profileDisplay = document.getElementById('profileDisplay');
+    profileDisplay.innerHTML = `
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        <h5>Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> ${data.name || 'Not provided'}</p>
+                        <p><strong>Email:</strong> ${data.email || 'Not provided'}</p>
+                        <p><strong>Gender:</strong> ${data.gender || 'Not provided'}</p>
+                        <p><strong>Age:</strong> ${data.age || 'Not provided'}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <h5>Additional Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Date of Birth:</strong> ${data.dob || 'Not provided'}</p>
+                        <p><strong>Address:</strong> ${data.address || 'Not provided'}</p>
+                        <p><strong>Last Updated:</strong> ${data.updatedAt ? new Date(data.updatedAt).toLocaleDateString() : 'Unknown'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function displayNoProfile() {
+    const profileDisplay = document.getElementById('profileDisplay');
+    profileDisplay.innerHTML = `
+        <div class="alert alert-info text-center">
+            <h4>No Profile Data Found</h4>
+            <p>Please fill out your profile in the <strong>Edit Profile</strong> tab to see your details here.</p>
+        </div>
+    `;
+}
+
+function loadLabResults() {
+    const registrationId = localStorage.getItem('registrationId');
+    const labAssistant = localStorage.getItem('labAssistant');
+    const date = localStorage.getItem('date');
+    const time = localStorage.getItem('time');
+    const testType = localStorage.getItem('testType');
+    
+    if (registrationId && labAssistant && date && time && testType) {
+        displayLabResults({
+            registrationId,
+            labAssistant,
+            date,
+            time,
+            testType
+        });
+    } else {
+        displayNoLabResults();
+    }
+}
+
+function displayLabResults(labData) {
+    const testResults = {
+        "Blood Test": `
+            <h5>Blood Test Results</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Hemoglobin: 13.5 g/dL</li>
+                <li class="list-group-item">White Blood Cells: 6,000 cells/mcL</li>
+                <li class="list-group-item">Platelets: 250,000/mcL</li>
+            </ul>
+        `,
+        "Eye Checkup": `
+            <h5>Eye Checkup Results</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Vision Acuity: 20/20</li>
+                <li class="list-group-item">Intraocular Pressure: Normal</li>
+                <li class="list-group-item">Color Vision: Normal</li>
+                <li class="list-group-item">Observation: No abnormalities detected</li>
+            </ul>
+        `,
+        "ECG": `
+            <h5>ECG Results</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Heart Rate: 72 bpm</li>
+                <li class="list-group-item">Rhythm: Normal Sinus Rhythm</li>
+                <li class="list-group-item">ST Segment: No abnormalities detected</li>
+            </ul>
+        `,
+        "General Checkup": `
+            <h5>General Checkup Results</h5>
+            <p class="alert alert-warning">Please consult your physician for a detailed assessment.</p>
+        `
+    };
+
+    const labDisplay = document.getElementById('labDisplay');
+    labDisplay.innerHTML = `
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-info text-white">
+                        <h5>Test Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Registration ID:</strong> ${labData.registrationId}</p>
+                        <p><strong>Lab Assistant:</strong> ${labData.labAssistant}</p>
+                        <p><strong>Test Type:</strong> ${labData.testType}</p>
+                        <p><strong>Date:</strong> ${labData.date}</p>
+                        <p><strong>Time:</strong> ${labData.time}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-warning text-white">
+                        <h5>Test Results</h5>
+                    </div>
+                    <div class="card-body">
+                        ${testResults[labData.testType] || "<p>No results available.</p>"}
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function displayNoLabResults() {
+    const labDisplay = document.getElementById('labDisplay');
+    labDisplay.innerHTML = `
+        <div class="alert alert-info text-center">
+            <h4>No Lab Results Found</h4>
+            <p>Please complete a lab test first by visiting the <a href="lab.html" class="alert-link">Lab page</a>.</p>
+        </div>
+    `;
+}
+
+async function loadAppointments() {
+    try {
+        const response = await fetch('http://localhost:3001/appointment/appoint');
+        if (response.ok) {
+            const appointments = await response.json();
+            displayAppointments(appointments);
+        } else {
+            displayNoAppointments();
+        }
+    } catch (error) {
+        console.error("Error fetching appointments:", error);
+        displayNoAppointments();
+    }
+}
+
+function displayAppointments(appointments) {
+    const appointmentsDisplay = document.getElementById('appointmentsDisplay');
+    
+    if (!appointments || appointments.length === 0) {
+        displayNoAppointments();
+        return;
+    }
+
+    let appointmentsHTML = '<div class="row">';
+    
+    appointments.forEach((appointment, index) => {
+        const appointmentDate = new Date(appointment.date).toLocaleDateString();
+        const createdDate = appointment.createdAt ? new Date(appointment.createdAt).toLocaleDateString() : 'Unknown';
+        
+        appointmentsHTML += `
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5>Appointment #${index + 1}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Type:</strong> ${appointment.type || 'Not specified'}</p>
+                        <p><strong>Date:</strong> ${appointmentDate}</p>
+                        <p><strong>Time:</strong> ${appointment.time || 'Not specified'}</p>
+                        <p><strong>Booked on:</strong> ${createdDate}</p>
+                        <span class="badge badge-success">Confirmed</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    appointmentsHTML += '</div>';
+    appointmentsDisplay.innerHTML = appointmentsHTML;
+}
+
+function displayNoAppointments() {
+    const appointmentsDisplay = document.getElementById('appointmentsDisplay');
+    appointmentsDisplay.innerHTML = `
+        <div class="alert alert-info text-center">
+            <h4>No Appointments Found</h4>
+            <p>You haven't booked any appointments yet. <a href="appointment.html" class="alert-link">Book your first appointment</a>.</p>
+        </div>
+    `;
+}
+        async function saveDetails(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const age = document.getElementById('age').value.trim();
+    const dob = document.getElementById('dob').value;
+    const address = document.getElementById('address').value.trim();
+    const gender = getSelectedGender();
+
+    if (!name || !email || !gender || !age || !dob || !address) {
+        alert("Some fields are missing. Please fill in all required fields.");
+        return;
+    }
+
+    const userData = {
+        name,
+        email,
+        gender,
+        age,
+        dob,
+        address
+    };
+
+    try {
+        const response = await fetch('http://localhost:3001/dashbo/dash', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message);
+            // Automatically reload the saved data
+            loadDetails();
+            // Switch to View Profile tab to show the saved data
+            $('#view-tab').tab('show');
+        } else {
+            alert(`Error: ${result.message}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again later.');
+    }
+}
+
+function getSelectedGender() {
+    const genders = document.getElementsByName('gender');
+    for (let gender of genders) {
+        if (gender.checked) {
+            return gender.value;
+        }
+    }
+    return null;
+}
+window.onload = function() {
+    loadDetails();
+    loadLabResults();
+    loadAppointments();
+};
+ </script>
+</body>
+</html>
